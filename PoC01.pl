@@ -161,6 +161,8 @@ our $nombres_mujer  = [qw(Lucia Maria Martina Paula Daniela Sofia Valeria Carla 
 our $nombres_hombre = [qw(Hugo Daniel Pablo Alejandro Alvaro Adrian David Martin Mario Diego Javier Manuel Lucas Nicolas Marcos Leo Sergio Mateo Izan Alex Iker Marc Jorge Carlos Miguel Antonio Angel Gonzalo Juan Ivan Eric Ruben Samuel Hector Victor Enzo Jose Gabriel Bruno Dario Raul Adam Guillermo Francisco Aaron Jesus Oliver Joel Aitor Pedro Rodrigo Erik Marco Alberto Pau Jaime Asier Luis Rafael Mohamed Dylan Marti Ian Pol Ismael Oscar Andres Alonso Biel Rayan Jan Fernando Thiago Arnau Cristian Gael Ignacio Joan)];
 our $signos = {
   aries => {
+    orden => 1,
+    compatibilidad => [qw(4 3 4 3 5 1 2 2 5 2 4 1)],
     elemento => 'fire',
     lema => 'Yo soy',
     virtudes => [qw(
@@ -183,6 +185,8 @@ our $signos = {
     )],
   },
   taurus => {
+    orden => 2,
+    compatibilidad => [qw(3 5 1 4 3 5 2 2 1 5 2 4)],
     elemento => 'earth',
     lema => 'Yo tengo',
     virtudes => [qw(
@@ -205,6 +209,8 @@ our $signos = {
     )],
   },
   gemini => {
+    orden => 3,
+    compatibilidad => [qw(4 1 5 1 4 2 5 1 3 2 5 1)],
     elemento => 'air',
     lema => 'Yo pienso',
     virtudes => [qw(
@@ -227,6 +233,8 @@ our $signos = {
     )],
   },
   cancer => {
+    orden => 4,
+    compatibilidad => [qw(2 4 3 5 3 4 1 5 2 4 2 5)],
     elemento => 'water',
     lema => 'Yo siento',
     virtudes => [qw(
@@ -249,6 +257,8 @@ our $signos = {
     )],
   },
   leo => {
+    orden => 5,
+    compatibilidad => [qw(5 3 4 3 5 1 4 3 5 2 2 3)],
     elemento => 'fire',
     lema => 'Yo hago',
     virtudes => [qw(
@@ -271,6 +281,8 @@ our $signos = {
     )],
   },
   virgo => {
+    orden => 6,
+    compatibilidad => [qw(1 5 2 4 1 5 2 4 1 5 2 2)],
     elemento => 'earth',
     lema => 'Yo analizo',
     virtudes => [qw(
@@ -293,6 +305,8 @@ our $signos = {
     )],
   },
   libra => {
+    orden => 7,
+    compatibilidad => [qw(3 3 5 1 4 2 5 2 4 2 5 3)],
     elemento => 'air',
     lema => 'Yo busco',
     virtudes => [qw(
@@ -315,6 +329,8 @@ our $signos = {
     )],
   },
   scorpius => {
+    orden => 8,
+    compatibilidad => [qw(3 3 1 5 3 4 2 5 2 4 2 5)],
     elemento => 'water',
     lema => 'Yo deseo',
     virtudes => [qw(
@@ -337,6 +353,8 @@ our $signos = {
     )],
   },
   sagittarius => {
+    orden => 9,
+    compatibilidad => [qw(5 1 3 2 5 1 4 2 5 1 4 2)],
     elemento => 'fire',
     lema => 'Yo veo',
     virtudes => [qw(
@@ -359,6 +377,8 @@ our $signos = {
     )],
   },
   capricornus => {
+    orden => 10,
+    compatibilidad => [qw(3 5 2 4 2 5 2 4 1 5 2 4)],
     elemento => 'earth',
     lema => 'Yo utilizo',
     virtudes => [qw(
@@ -381,6 +401,8 @@ our $signos = {
     )],
   },
   aquarius => {
+    orden => 11,
+    compatibilidad => [qw(4 2 5 2 2 2 5 2 4 2 5 3)],
     elemento => 'air',
     lema => 'Yo conosco',
     virtudes => [qw(
@@ -403,6 +425,8 @@ our $signos = {
     )],
   },
   pisces => {
+    orden => 12,
+    compatibilidad => [qw(1 4 1 5 3 2 3 5 2 4 3 5)],
     elemento => 'water',
     lema => 'Yo creo',
     virtudes => [qw(
