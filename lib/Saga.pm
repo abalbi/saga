@@ -7,12 +7,16 @@ use Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(azar t);
 
-
+use Alteracion;
 use Entorno;
 use Entorno::Fabrica;
 use Persona;
 use Persona::Fabrica;
+use Persona::Valor;
+use Persona::Valor::Animo;
 use Situacion;
+use Situacion::Accion;
+use Situacion::Actor;
 use Situacion::Fabrica;
 
 sub t {
@@ -57,6 +61,18 @@ sub azar {
   }
   return int rand $valor + 1 if $valor =~ /^\d+$/;
   return undef;
+}
+
+sub dt {
+  my $datetime = shift;
+  return DateTime::Format::Strptime->new(pattern => '%FT%T')->parse_datetime($datetime);
+}
+
+sub tiempo {
+  my $fecha = shift;
+  my $tiempo = shift;
+  $tiempo =~ s/d/ * 24 * 60 * 60/g;
+  return eval $tiempo;
 }
 
 1;

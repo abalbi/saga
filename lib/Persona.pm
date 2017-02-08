@@ -1,21 +1,12 @@
 package Persona;
+use Want;
+use strict;
 use Data::Dumper;
 use DateTime::Format::Strptime;
 use Zodiac::Tiny qw(zodiac_of);
 use fields qw(
-  _nombre
-  _nacimiento 
-  _sexo 
-  _zodiaco 
-  _ascendente_erotica 
-  _cuerpo 
-  _mente 
-  _espiritu 
-  _sentidos 
-  _sociabilidad 
-  _animo
-  _positivos
-  _negativos
+  _items
+  _entorno
 );
 
 sub new {
@@ -23,83 +14,87 @@ sub new {
   my $params = shift || {};
   $class = ref $class if ref $class;
   my $self = fields::new($class);
+  $self->{_items} = [];
   foreach my $key (sort keys %$params) {
-    $self->{'_'.$key} = $params->{$key};
+    my $valor = $params->{$key};
+    $valor = Persona::Valor->new({key => $key, valor => $valor}) if not ref $valor;
+    die "$key = $valor no es un Persona::Valor" if ref $valor eq 'ARRAY';
+    die "$key = $valor no es un Persona::Valor" if ref $valor eq 'HASH';
+    die "$key = $valor no es un Persona::Valor" if !$valor->isa('Persona::Valor');
+    push @{$self->{_items}}, $valor;
+    $valor->persona($self);
   }
   $self;
 }
 
-sub nombre {
-  my $self = shift;;
-  return $self->{_nombre};
+our $AUTOLOAD;
+
+sub AUTOLOAD {
+  my $method = $AUTOLOAD;
+  my $self = shift;
+  my $fecha = shift;
+  $fecha = Saga::dt($fecha) if defined $fecha;
+  $method =~ s/.*:://;
+  my $crv = $Contextual::Return::Value;
+  my $propiedad = $method;
+  foreach my $item (@{$self->items}) {
+    if($item->key eq $propiedad) {
+      return $item if want('OBJECT');
+      return $item->valor($fecha);
+    }
+  }
+  die "No se encontro Persona::$propiedad";
 }
 
-sub sexo {
-  my $self = shift;;
-  return $self->{_sexo};
+sub tiene {
+  my $self = shift;
+  my $propiedad = shift;
+  my $tiene = scalar grep {$_->key eq $propiedad} @{$self->items};
+  return $tiene ? 1 : 0;
 }
 
-sub sentidos {
-  my $self = shift;;
-  return $self->{_sentidos};
+sub items {
+  my $self = shift;
+  return $self->{_items};  
 }
 
-sub positivos {
-  my $self = shift;;
-  return $self->{_positivos};
-}
-
-sub negativos {
-  my $self = shift;;
-  return $self->{_negativos};
-}
-
-sub animo {
-  my $self = shift;;
-  return $self->{_animo};
-}
-
-
-sub sociabilidad {
-  my $self = shift;;
-  return $self->{_sociabilidad};
-}
-
-sub cuerpo {
-  my $self = shift;;
-  return $self->{_cuerpo};
-}
-
-sub mente {
-  my $self = shift;;
-  return $self->{_mente};
-}
-
-sub espiritu {
-  my $self = shift;;
-  return $self->{_espiritu};
-}
-
-
-sub ascendente_erotica {
-  my $self = shift;;
-  return $self->{_ascendente_erotica};
+sub entorno {
+  my $self = shift;
+  my $entorno = shift;
+  $self->{_entorno} = $entorno if defined $entorno;
+  return $self->{_entorno};  
 }
 
 
 sub nacimiento {
   my $self = shift;
-  return DateTime::Format::Strptime->new(pattern => '%FT%T')->parse_datetime($self->{_nacimiento});
+  my $nacimiento = [grep {$_->key eq 'nacimiento'} @{$self->items}]->[0];
+  return $nacimiento->valor;
 }
 
 sub edad {
   my $self = shift;
-  return $Persona::Fabrica::ano_base - $self->nacimiento->year;
+  return $Persona::Fabrica::ano_base - Saga::dt($self->nacimiento)->year;
 }
 
 sub zodiaco {
   my $self = shift; 
   return zodiac_of($self->nacimiento)
+}
+
+sub alterar {
+  my $self = shift; 
+  my $params = shift;
+  my $alteracion = Alteracion->new({
+    persona => $self,
+    fecha => $params->{fecha},
+    alteracion => $params->{alteracion},
+    key => $params->{key},
+    temporal => $params->{temporal},
+    duracion => $params->{duracion},
+  });
+  push @{$self->entorno->items}, $alteracion;
+
 }
 
 sub t {
@@ -111,13 +106,13 @@ sub t {
 sub describir {
   my $self = shift;
   my $str = '';
-  $str .= sprintf("%s, %s, %s, %s, %s, %s", 
-    $self->nombre, 
+  $str .= sprintf("%s, %s\n%s, %s, %s,\n%s,\n%s\n", 
+    $self->nombre,
     $self->edad, 
-    $self->zodiaco,
-    $self->t('ascendente_erotica'),
-    join(', ', map {Saga::t($_, $self->sexo)} @{$self->positivos}),
-    join(', ', map {Saga::t($_, $self->sexo)} @{$self->negativos}),
+    $self->ascendente_erotica->t,
+    $self->positivos->t,
+    $self->negativos->t,
+    $self->acentos->t,
     join(', ', map {"$_: ". $self->$_} qw(cuerpo mente espiritu sentidos sociabilidad animo)),
   );
   return $str;

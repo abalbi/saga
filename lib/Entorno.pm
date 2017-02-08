@@ -11,8 +11,14 @@ sub new {
 
 sub cantidad_personas {
   my $self = shift;
-  return 6;
+  return 5;
 }
+
+sub cantidad_situaciones {
+  my $self = shift;
+  return 10;
+}
+
 
 sub items {
   my $self = shift;
@@ -24,11 +30,25 @@ sub personas {
   return [grep {$_->isa('Persona')} @{$self->items}];
 }
 
+sub alteraciones {
+  my $self = shift;
+  return [grep {$_->isa('Alteracion')} @{$self->items}];
+}
+
+sub situaciones {
+  my $self = shift;
+  return [grep {$_->isa('Situacion')} @{$self->items}];
+}
+
+
 sub describir {
   my $self = shift;
   my $str = '';
   foreach my $persona (@{$self->personas}) {
     $str .= $persona->describir."\n";
+  }
+  foreach my $situacion (@{$self->situaciones}) {
+    $str .= $situacion->describir."\n";
   }
   return $str;
 }
@@ -54,8 +74,15 @@ sub buscar {
     my $boo = 1;
     foreach my $key (sort keys %$params) {
       my $param = $params->{$key};
-      if($item->can($key)) {
-        $boo = 0 if $item->$key ne $param;
+      if($item->tiene($key)) {
+        if($param =~ qr/^\!(.+)/) {
+          $boo = 0 if $item->$key eq $1;
+        } else {
+          $boo = 0 if $item->$key ne $param;
+        }
+      }
+      if($key eq 'package') {
+        $boo = 0 if !$item->isa($param);
       }
     }
     push @$items, $item if $boo;
