@@ -16,7 +16,7 @@ sub cantidad_personas {
 
 sub cantidad_situaciones {
   my $self = shift;
-  return 10;
+  return 15;
 }
 
 

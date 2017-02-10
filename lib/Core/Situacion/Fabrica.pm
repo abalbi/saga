@@ -3,39 +3,39 @@ use strict;
 use Data::Dumper;
 
 our $calentando_motores = {
-BESOS_APASIONADOS   => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 10, 'bizarr[a|o]' => 6, 'depravad[a|o]' => 0,},
-CARICIAS_SALVAJES   => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 6, 'depravad[a|o]' => 6,},
-STRIPTEASSE         => { 'romantic[a|o]' => 6, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
-BDSM                => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 1,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
-FILMAR              => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
-SEXO_Y_GASTRONOMIA  => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
-ATAME               => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
-JUEGO_ROLES         => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
-MORDISCOS_UNIAS_CACHETES  => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
-ME_APETECE_HACERLO_AQUI   => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
-LENCERIA            => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
-EXIVISIONISMO       => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 1,'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
-ROMPER_ROPA         => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 6, 'depravad[a|o]' => 10, },
-DULCES_PALABRAS     => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 6,'bizarr[a|o]' => 6, 'depravad[a|o]' => 0,},
-MASAJES_ACEITES_CARICIA   => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 6,'bizarr[a|o]' => 6, 'depravad[a|o]' => 0,}
+  BESOS_APASIONADOS   => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 10, 'bizarr[a|o]' => 6, 'depravad[a|o]' => 0,},
+  CARICIAS_SALVAJES   => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 6, 'depravad[a|o]' => 6,},
+  STRIPTEASSE         => { 'romantic[a|o]' => 6, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
+  BDSM                => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 1,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
+  FILMAR              => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
+  SEXO_Y_GASTRONOMIA  => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
+  ATAME               => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
+  JUEGO_ROLES         => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
+  MORDISCOS_UNIAS_CACHETES  => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
+  ME_APETECE_HACERLO_AQUI   => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
+  LENCERIA            => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
+  EXIVISIONISMO       => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 1,'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
+  ROMPER_ROPA         => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 6, 'depravad[a|o]' => 10, },
+  DULCES_PALABRAS     => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 6,'bizarr[a|o]' => 6, 'depravad[a|o]' => 0,},
+  MASAJES_ACEITES_CARICIA   => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 6,'bizarr[a|o]' => 6, 'depravad[a|o]' => 0,}
 };
 
 our $a_toda_maquina = {
-MASTURBACION => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
-JUGUETES_EROTICOS => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
-ARNESES_Y_CORREAS => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
-MESA_SILLA_DE_PIE => { 'romantic[a|o]' => 6, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
-DOBLE_PENETRACION => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
-LLUVIA_DORADA_BESO_NEGRO => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 1,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
-SEXO_Y_DOLOR => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 0,'bizarr[a|o]' => 1, 'depravad[a|o]' => 10, },
-FIST_FUCKING => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
-BUSCANDO_PUNTO_G => { 'romantic[a|o]' => 12, 'fogos[a|o]' => 20,'bizarr[a|o]' => 20, 'depravad[a|o]' => 12,},
-ACROBACIAS => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
-SEXO_ORAL => { 'romantic[a|o]' => 6, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
-POR_DETRAS => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 10,},
-CUBANA => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
-69 => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
-EN_LA_CAMA => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 6,'bizarr[a|o]' => 0, 'depravad[a|o]' => 1,},
+  MASTURBACION => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
+  JUGUETES_EROTICOS => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
+  ARNESES_Y_CORREAS => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
+  MESA_SILLA_DE_PIE => { 'romantic[a|o]' => 6, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
+  DOBLE_PENETRACION => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
+  LLUVIA_DORADA_BESO_NEGRO => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 1,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
+  SEXO_Y_DOLOR => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 0,'bizarr[a|o]' => 1, 'depravad[a|o]' => 10, },
+  FIST_FUCKING => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 6,'bizarr[a|o]' => 10,  'depravad[a|o]' => 10, },
+  BUSCANDO_PUNTO_G => { 'romantic[a|o]' => 12, 'fogos[a|o]' => 20,'bizarr[a|o]' => 20, 'depravad[a|o]' => 12,},
+  ACROBACIAS => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
+  SEXO_ORAL => { 'romantic[a|o]' => 6, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
+  POR_DETRAS => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 10,},
+  CUBANA => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
+  69 => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
+  EN_LA_CAMA => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 6,'bizarr[a|o]' => 0, 'depravad[a|o]' => 1,},
 };
 
 sub hacer {
@@ -48,30 +48,53 @@ sub hacer {
   $fecha = Saga::dt($fecha);
   my $personas = $params->{personas};
   $personas = [] if ref $personas ne 'ARRAY';
-  while(scalar @{$personas} < 2) {
-    my $persona = $entorno->buscar_crear({package => 'Persona'});
-    next if scalar grep {$_ eq $persona} @$personas;
-    push @$personas, $persona;
-  }
-  my $actores = [];
-  foreach my $persona (@$personas) {
-    push @$actores, Situacion::Actor->new({
-      persona => $persona,
-      puntos_placer => 0,
-    });
-  }
+  my $actores = $self->hacer_actores($personas, $entorno);
+  my $situacion = $self->hacer_situacion($entorno, $actores, $fecha);
+  $self->hacer_calentando_motores($situacion);
+  $self->hacer_a_toda_maquina($situacion);
+  $self->hacer_subidon_final($situacion);
+  $self->hacer_petite_morte($situacion);
+  return $situacion;
+}
+
+sub hacer_situacion {
+  my $self = shift;
+  my $entorno = shift;
+  my $actores = shift;
+  my $fecha = shift;
   my $situacion = Situacion->new({
     entorno => $entorno,
     fecha_base => $fecha->datetime,
     fecha => $fecha->datetime,
     actores => $actores,
   });
-
-  $self->hacer_calentando_motores($situacion);
-  $self->hacer_a_toda_maquina($situacion);
-  $self->hacer_subidon_final($situacion);
-  $self->hacer_petite_morte($situacion);
   return $situacion;
+}
+
+sub hacer_actores {
+  my $self = shift;
+  my $personas = shift;
+  my $entorno = shift;
+  my $actores = [];
+  while(scalar @{$personas} < 2) {
+    my $params = {
+      package => 'Persona'
+    };
+    if($personas->[0]) {
+      $params->{nombre} = "!".$personas->[0]->nombre;
+
+    }
+    my $persona = $entorno->buscar_crear($params);
+    next if scalar grep {$_ eq $persona} @$personas;
+    push @$personas, $persona;
+  }
+  foreach my $persona (@$personas) {
+    push @$actores, Situacion::Actor->new({
+      persona => $persona,
+      puntos_placer => 0,
+    });
+  }
+  return $actores;
 }
 
 sub hacer_petite_morte {
@@ -91,7 +114,6 @@ sub hacer_petite_morte {
     $params->{key} = 'animo';
     $params->{fecha} = $situacion->fecha;
     $actor->persona->alterar($params);
-    print STDERR Dumper [$puntos_placer, $params];
     $situacion->log(
       $actor->nombre . " obtiene un $params->{alteracion} en obtiene un $params->{key} " .
       "durante " . $params->{duracion} . " y queda en " . $actor->persona->animo($situacion->fecha) . " y animo temporal " . $actor->persona->animo->temporal($situacion->fecha)
@@ -197,8 +219,5 @@ sub hacer_calentando_motores {
     $situacion->fecha(DateTime->from_epoch(epoch => $situacion->fecha->epoch + $duracion)->datetime);
   }
 }
-
-
-
 
 1;

@@ -10,8 +10,8 @@ use Zodiac::Tiny qw(zodiac_of);
 our $ano_base = DateTime->now->year;
 our $nombres_mujer  = [qw(Lucia Maria Martina Paula Daniela Sofia Valeria Carla Sara Alba Julia Noa Emma Claudia Carmen Marta Valentina Irene Adriana Ana Laura Elena Alejandra Ines Marina Vera Candela Laia Ariadna Lola Andrea Rocio Angela Vega Nora Jimena Blanca Alicia Clara Olivia Celia Alma Eva Elsa Leyre Natalia Victoria Isabel Cristina Lara Abril Triana Nuria Aroa Carolina Manuela Chloe Mia Mar Gabriela Mara Africa Iria Naia Helena Paola Noelia Nahia Miriam Salma)];
 our $nombres_hombre = [qw(Hugo Daniel Pablo Alejandro Alvaro Adrian David Martin Mario Diego Javier Manuel Lucas Nicolas Marcos Leo Sergio Mateo Izan Alex Iker Marc Jorge Carlos Miguel Antonio Angel Gonzalo Juan Ivan Eric Ruben Samuel Hector Victor Enzo Jose Gabriel Bruno Dario Raul Adam Guillermo Francisco Aaron Jesus Oliver Joel Aitor Pedro Rodrigo Erik Marco Alberto Pau Jaime Asier Luis Rafael Mohamed Dylan Marti Ian Pol Ismael Oscar Andres Alonso Biel Rayan Jan Fernando Thiago Arnau Cristian Gael Ignacio Joan)];
-our $positivos = [qw(accesible humilde activ[a|o] independiente adaptable intuitiv[a|o] afable inspirador[a|] afortunad[a|o] ingenios[a|o] alegre innovador[a|] apasionad[a|o] just[a|o] atrevid[a|o] leal bondados[a|o] logic[a|o] calmad[a|o] luchador[a|] caritativo meticulos[a|o] compasiv[a|o] modest[a|o] comunicativ[a|o] original con_iniciativa paciente concentrad[a|o] pacific[a|o] considerad[a|o] prudente constante profund[a|o] creativ[a|o] receptiv[a|o] curios[a|o] rect[a|o] decidid[a|o] reservad[a|o] discret[a|o] sensat[a|o] divertid[a|o] sensual divulgador[a|] sincer[a|o] ecuanime tenaz elegante tolerante emotiv[a|o] transigente energic[a|o] valiente espontane[a|o] veraz extrovertid[a|o] versatil generos[a|o] vital honest[a|o] voluntarios[a|o])];
-our $negativos = [qw(aburrid[a|o] inconsciente agresiv[a|o] inconstante agri[a|o] indecis[a|o] apatic[a|o] indiscret[a|o] arrogante inhibid[a|o] artificios[a|o] inmoral autocompasiv[a|o] intolerante autoritario insensat[a|o] avaricios[a|o] lujurios[a|o] caprichos[a|o] malvad[a|o] celos[a|o] megaloman[a|o] chismos[a|o] mentiros[a|o] cobarde nervios[a|o] coleric[a|o] obsesiv[a|o] cruel oportunista dependiente ordinari[a|o] desconectad[a|o] pasiv[a|o] desconsiderad[a|o] pesimista distraid[a|o] presuntuos[a|o] egoista rencoros[a|o] envidios[a|o] rigid[a|o] fals[a|o] rutinari[a|o] fri[a|o] sadic[a|o] frivol[a|o] sanguinari[a|o] gafe simple hipocrita sumis[a|o] hermetic[a|o] susceptible impaciente superficial imprudente tiran[a|o] inadaptable triste inapropiad[a|o] vulnerable)];
+our $rasgos_positivos = [qw(accesible humilde activ[a|o] independiente adaptable intuitiv[a|o] afable inspirador[a|] afortunad[a|o] ingenios[a|o] alegre innovador[a|] apasionad[a|o] just[a|o] atrevid[a|o] leal bondados[a|o] logic[a|o] calmad[a|o] luchador[a|] caritativo meticulos[a|o] compasiv[a|o] modest[a|o] comunicativ[a|o] original con_iniciativa paciente concentrad[a|o] pacific[a|o] considerad[a|o] prudente constante profund[a|o] creativ[a|o] receptiv[a|o] curios[a|o] rect[a|o] decidid[a|o] reservad[a|o] discret[a|o] sensat[a|o] divertid[a|o] sensual divulgador[a|] sincer[a|o] ecuanime tenaz elegante tolerante emotiv[a|o] transigente energic[a|o] valiente espontane[a|o] veraz extrovertid[a|o] versatil generos[a|o] vital honest[a|o] voluntarios[a|o])];
+our $rasgos_negativos = [qw(aburrid[a|o] inconsciente agresiv[a|o] inconstante agri[a|o] indecis[a|o] apatic[a|o] indiscret[a|o] arrogante inhibid[a|o] artificios[a|o] inmoral autocompasiv[a|o] intolerante autoritario insensat[a|o] avaricios[a|o] lujurios[a|o] caprichos[a|o] malvad[a|o] celos[a|o] megaloman[a|o] chismos[a|o] mentiros[a|o] cobarde nervios[a|o] coleric[a|o] obsesiv[a|o] cruel oportunista dependiente ordinari[a|o] desconectad[a|o] pasiv[a|o] desconsiderad[a|o] pesimista distraid[a|o] presuntuos[a|o] egoista rencoros[a|o] envidios[a|o] rigid[a|o] fals[a|o] rutinari[a|o] fri[a|o] sadic[a|o] frivol[a|o] sanguinari[a|o] gafe simple hipocrita sumis[a|o] hermetic[a|o] susceptible impaciente superficial imprudente tiran[a|o] inadaptable triste inapropiad[a|o] vulnerable)];
 our $acentos_positivos = [qw(agilidad atractivo_fisico buscar calcular_mentalmente concentrarse contorsionarse convencer correr creacion_artistica culturilla_general destreza documentarse_investigar elasticidad empatia enseñar equilibrio esconderse estilo_personal evaluar fingir_mentir fuerza hacer_reir imitar influir integrarse intuicion mando memorizar orientarse pelear punteria_de_oro resistencia seducir sentido_desarrollado tocar_la_fibra tratar_con_animales tratar_con_niños trepar_escalar voz_bonita  acrobacias aficion armas_cuerpo_a_cuerpo arte_marcial atletismo_deporte bailar burocracia cantar comerciar conducir_pilotar defensa_personal diplomacia_y_etiqueta disfrazarse disparar forzar_mecanismos idioma_extranjero juegos_de_manos mañas montar_animal oratoria peluqueria_estetica primeros_auxilios tocar_instrumento torturar  aeronautica geologia antropologia historia arqueologia arquitectura arte_dramatico artesania astronomia audiovisuales biologia cibernetica ciencias_de_la_informacion criminologia derecho diseño ebanisteria ecologia economia electronica filosofia fisica fotografia quimica genetica ingenieria informatica farmacologia filologia gastronomia jardineria lampisteria literatura matematicas medicina mecanica metalurgia meteorologia musica ocultismo parapsicologia politica psicologia teologia veterinaria zoologia)];
 our $acentos_negativos = [qw(adiccion cansancio_facil lent[a|o] debilidad_muscular dedos_torpes dificultad_de_aprendizaje dificultades_de_comunicacion enanismo discapacidad no_ritmo gigantismo invalidez enimista_animales enimista_ninos mal_aliento mal_humor mala_memoria metepatas sin_estilo_personal no_se_nadar nulidad_deportiva poco_agraciad[a|o], fe[a|o]_o_repulsiv[a|o] gloton[a|] punteria_horrible gord[a|o]_rigidez_corporal incapaz_de_orientarte incultura ineptitud_informatica_tecnologia sentido_atrofiado tics_insoportables torpeza ineptitud_para_idiomas voz_horrible)];
 
@@ -68,29 +68,31 @@ sub dar_acentos {
 sub dar_rasgos {
   my $self = shift;
   my $persona_params = shift;
-  $persona_params->{positivos} = [];
-  $persona_params->{negativos} = [];
+  my $rasgos = {};
+  $rasgos->{positivos} = [];
+  $rasgos->{negativos} = [];
   my $numero = $persona_params->{animo}->valor;
-  my $rasgos = [];
-  $rasgos = [2,1] if $numero == 4;
-  $rasgos = [1,1] if $numero == 5;
-  $rasgos = [1,2] if $numero == 6;
-  $rasgos = [1,3] if $numero == 7;
+  my $rasgos_valores = [];
+  $rasgos_valores = [2,1] if $numero == 4;
+  $rasgos_valores = [1,1] if $numero == 5;
+  $rasgos_valores = [1,2] if $numero == 6;
+  $rasgos_valores = [1,3] if $numero == 7;
   my $c = 1;
   my $lista = [];
-  while ($rasgos->[0] >= $c) {
-    my $item = Saga::azar($negativos);
-    push @{$lista}, Saga::azar($negativos);
+  while ($rasgos_valores->[0] >= $c) {
+    my $item = Saga::azar($rasgos_negativos);
+    push @{$lista}, Saga::azar($rasgos_negativos);
     $c++;
   }
-  $persona_params->{negativos} = Persona::Valor->new({key => 'negativos', valor => $lista});
+  $rasgos->{negativos} = $lista;
   my $c = 1;
   my $lista = [];
-  while ($rasgos->[0] >= $c) {
-    push @{$lista}, Saga::azar($positivos);
+  while ($rasgos_valores->[0] >= $c) {
+    push @{$lista}, Saga::azar($rasgos_positivos);
     $c++;
   }
-  $persona_params->{positivos} = Persona::Valor->new({key => 'positivos', valor => $lista});
+  $rasgos->{positivos} = $lista;
+  $persona_params->{rasgos} = Persona::Valor::Rasgos->new({key => 'rasgos', valor => $rasgos});
 }
 
 

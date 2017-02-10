@@ -7,21 +7,46 @@ use Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(azar t);
 
-use Alteracion;
-use Entorno;
-use Entorno::Fabrica;
-use Persona;
-use Persona::Fabrica;
-use Persona::Valor;
-use Persona::Valor::Animo;
-use Situacion;
-use Situacion::Accion;
-use Situacion::Actor;
-use Situacion::Fabrica;
+use Core::Alteracion;
+use Core::Entorno;
+use Core::Entorno::Fabrica;
+use Core::Persona;
+use Core::Persona::Fabrica;
+use Core::Persona::Valor;
+use Core::Persona::Valor::Animo;
+use Core::Persona::Valor::Rasgos;
+use Core::Situacion;
+use Core::Situacion::Actor;
+use Core::Situacion::Fabrica;
+
+
+sub load {
+  my $modulo = shift;
+  require $modulo . '/Loader.pm';
+}
+
+sub fecha_base {
+  return DateTime->now->datetime;
+}
+
+sub params {
+  my $params = {@_} if scalar @_ > 1;
+  $params = shift if scalar @_ == 1;
+  return $params;
+}
 
 sub t {
   my $valor = shift;
   my $sexo = shift;
+  if(ref $valor eq 'ARRAY') {
+    return join ', ', map {
+      if(ref $_ eq 'HASH'){
+        Saga::t($_->{key}, $sexo) . ": " . Saga::t($_->{valor}, $sexo)
+      } else {
+        Saga::t($_, $sexo)
+      }
+    } @{$valor};
+  }
   my $str = $valor;
   $str =~ /\[(\w*)\|(\w*)\]/;
   if(defined $sexo) {
@@ -69,9 +94,9 @@ sub dt {
 }
 
 sub tiempo {
-  my $fecha = shift;
   my $tiempo = shift;
   $tiempo =~ s/d/ * 24 * 60 * 60/g;
+  $tiempo =~ s/y/ * 365 * 24 * 60 * 60/g;
   return eval $tiempo;
 }
 

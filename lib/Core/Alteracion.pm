@@ -1,8 +1,10 @@
 package Alteracion;
 use fields qw(_fecha _persona _key _alteracion _duracion _temporal);
+use Data::Dumper;
+
 sub new {
   my $class = shift;
-  my $params = shift || {};
+  my $params = Saga::params(@_);
   $class = ref $class if ref $class;
   my $self = fields::new($class);
   foreach my $key (sort keys %$params) {

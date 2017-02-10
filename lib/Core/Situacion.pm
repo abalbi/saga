@@ -19,6 +19,11 @@ sub actores {
   return $self->{_actores};
 }
 
+sub entorno {
+  my $self = shift;
+  return $self->{_entorno};
+}
+
 sub fecha {
   my $self = shift;
   my $valor = shift;

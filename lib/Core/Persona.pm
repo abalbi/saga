@@ -11,16 +11,20 @@ use fields qw(
 
 sub new {
   my $class = shift;
-  my $params = shift || {};
-  $class = ref $class if ref $class;
+  my $params;
+  if(scalar @_) {
+    if(ref $_[0] eq 'HASH') {
+      $params = $_[0];
+    } else {
+      $params = {@_};
+    }
+
+  }
   my $self = fields::new($class);
   $self->{_items} = [];
   foreach my $key (sort keys %$params) {
     my $valor = $params->{$key};
     $valor = Persona::Valor->new({key => $key, valor => $valor}) if not ref $valor;
-    die "$key = $valor no es un Persona::Valor" if ref $valor eq 'ARRAY';
-    die "$key = $valor no es un Persona::Valor" if ref $valor eq 'HASH';
-    die "$key = $valor no es un Persona::Valor" if !$valor->isa('Persona::Valor');
     push @{$self->{_items}}, $valor;
     $valor->persona($self);
   }
@@ -33,7 +37,6 @@ sub AUTOLOAD {
   my $method = $AUTOLOAD;
   my $self = shift;
   my $fecha = shift;
-  $fecha = Saga::dt($fecha) if defined $fecha;
   $method =~ s/.*:://;
   my $crv = $Contextual::Return::Value;
   my $propiedad = $method;
@@ -79,39 +82,24 @@ sub edad {
 
 sub zodiaco {
   my $self = shift; 
-  return zodiac_of($self->nacimiento)
+  return zodiac_of(Saga::dt($self->nacimiento));
 }
 
 sub alterar {
-  my $self = shift; 
-  my $params = shift;
-  my $alteracion = Alteracion->new({
-    persona => $self,
-    fecha => $params->{fecha},
-    alteracion => $params->{alteracion},
-    key => $params->{key},
-    temporal => $params->{temporal},
-    duracion => $params->{duracion},
-  });
-  push @{$self->entorno->items}, $alteracion;
-
-}
-
-sub t {
   my $self = shift;
-  my $key = shift;
-  return Saga::t($self->$key,$self->sexo);  
+  my $params = shift;
+  my $key = $params->{key};
+  $self->$key->alterar($params);
 }
 
 sub describir {
   my $self = shift;
   my $str = '';
-  $str .= sprintf("%s, %s\n%s, %s, %s,\n%s,\n%s\n", 
+  $str .= sprintf("%s, %s\n%s, %s\n%s,\n%s,\n%s\n", 
     $self->nombre,
     $self->edad, 
     $self->ascendente_erotica->t,
-    $self->positivos->t,
-    $self->negativos->t,
+    $self->rasgos->t,
     $self->acentos->t,
     join(', ', map {"$_: ". $self->$_} qw(cuerpo mente espiritu sentidos sociabilidad animo)),
   );
