@@ -45,7 +45,7 @@ sub valor {
       my $fecha_alteracion = Saga::dt($alteracion->fecha);
       next if DateTime->compare($fecha_alteracion, $fecha) > 0;
       if($alteracion->duracion) {
-        my $fecha_vencimiento = DateTime->from_epoch(epoch => (Saga::dt($alteracion->fecha)->epoch + Saga::tiempo($alteracion->duracion)));
+        my $fecha_vencimiento = DateTime->from_epoch(epoch => (Saga::dt($alteracion->fecha)->epoch + Saga::codes2seg($alteracion->duracion)));
         next if DateTime->compare($fecha, $fecha_vencimiento) > 0;
       }
       if($self->{_valor} =~ /^\d+$/) {

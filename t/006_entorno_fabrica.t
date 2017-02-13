@@ -6,8 +6,8 @@ use Test::Deep;
 use Data::Dumper;
 
 use Saga;
-
 #cover -delete; PERL5OPT=-MDevel::Cover=+inc,/Volumes/UFS prove -v -I../lib "$@" && cover
+Saga::load('Libido');
 
 describe "Entorno::Fabrica" => sub {
   context "Entorno::Fabrica::hacer" => sub {

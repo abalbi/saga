@@ -2,12 +2,7 @@ package Persona;
 use Want;
 use strict;
 use Data::Dumper;
-use DateTime::Format::Strptime;
-use Zodiac::Tiny qw(zodiac_of);
-use fields qw(
-  _items
-  _entorno
-);
+use fields qw(_items _entorno);
 
 sub new {
   my $class = shift;
@@ -66,23 +61,6 @@ sub entorno {
   my $entorno = shift;
   $self->{_entorno} = $entorno if defined $entorno;
   return $self->{_entorno};  
-}
-
-
-sub nacimiento {
-  my $self = shift;
-  my $nacimiento = [grep {$_->key eq 'nacimiento'} @{$self->items}]->[0];
-  return $nacimiento->valor;
-}
-
-sub edad {
-  my $self = shift;
-  return $Persona::Fabrica::ano_base - Saga::dt($self->nacimiento)->year;
-}
-
-sub zodiaco {
-  my $self = shift; 
-  return zodiac_of(Saga::dt($self->nacimiento));
 }
 
 sub alterar {

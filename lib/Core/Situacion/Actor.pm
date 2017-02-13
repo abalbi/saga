@@ -1,5 +1,6 @@
 package Situacion::Actor;
 use Data::Dumper;
+use Want;
 use fields qw(_persona _stash _entorno _fecha);
 sub new {
   my $class = shift;
@@ -37,6 +38,20 @@ sub AUTOLOAD {
     $self->stash->{$propiedad} = $valor; 
   }
   return $self->stash->{$propiedad};
+}
+
+sub acentuar {
+  my $self = shift;
+  my $pedidos = shift;
+  my $acentos = $self->acentos;
+  my $mod = 0;
+  my $usables = [];
+  foreach my $pedido (@$pedidos) {
+    push @$usables, grep {$pedido eq $_->{key}} @$acentos;
+  }
+  my $acento = Saga::azar($usables);
+  $mod = $acento->{valor};
+  return $mod;
 }
 
 sub persona {

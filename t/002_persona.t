@@ -6,6 +6,7 @@ use Test::Deep;
 use Data::Dumper;
 
 use Saga;
+Saga::load('Libido');
 
 #cover -delete; PERL5OPT=-MDevel::Cover=+inc,/Volumes/UFS prove -v -I../lib "$@" && cover
 

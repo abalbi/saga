@@ -35,7 +35,7 @@ describe "Saga" => sub {
     context "CUANDO ejecuto el azar de Util con un numero" => sub {
       Saga::load('Libido');
       it "ENTONCES el hacer me debe devolver un numero mejor o igual al enviado" => sub {
-        
+        use_ok('Libido::Persona');
       };
     };
   };

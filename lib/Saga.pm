@@ -1,6 +1,8 @@
 package Saga;
 use strict;
 use Data::Dumper;
+use DateTime;
+use DateTime::Format::Strptime;
 our $srand = 24170986;
 our $srand_asignado = 0;
 use Exporter;
@@ -13,12 +15,9 @@ use Core::Entorno::Fabrica;
 use Core::Persona;
 use Core::Persona::Fabrica;
 use Core::Persona::Valor;
-use Core::Persona::Valor::Animo;
-use Core::Persona::Valor::Rasgos;
 use Core::Situacion;
 use Core::Situacion::Actor;
 use Core::Situacion::Fabrica;
-
 
 sub load {
   my $modulo = shift;
@@ -93,11 +92,22 @@ sub dt {
   return DateTime::Format::Strptime->new(pattern => '%FT%T')->parse_datetime($datetime);
 }
 
-sub tiempo {
+sub codes2seg {
   my $tiempo = shift;
   $tiempo =~ s/d/ * 24 * 60 * 60/g;
   $tiempo =~ s/y/ * 365 * 24 * 60 * 60/g;
   return eval $tiempo;
 }
 
+sub seg2codes {
+  my $total = shift;
+  my $seg = $total;
+  return $seg . 's' if $seg <= 59;
+  my $min = 0;
+  while($seg > 59) {
+    $min++;
+    $seg -= 60;
+  }
+  return $min .'m '.$seg.'s'
+}
 1;

@@ -16,6 +16,8 @@ sub new {
 
 sub actores {
   my $self = shift;
+  my $actores = shift;
+  $self->{_actores} = $actores if defined $actores;
   return $self->{_actores};
 }
 
@@ -64,6 +66,18 @@ sub describir {
   $str .= "###########################################################################\n";
   $str .= $self->fecha_base."\n";
   $str .= join("\n", @{$self->log});
+  return $str;
+}
+
+sub nombres_actores {
+  my $self = shift;
+  my $nombres = [map {$_->nombre} @{$self->actores}];
+  my $str = '';
+  while (scalar @$nombres) {
+    $str .= shift @$nombres;
+    $str .= ', ' if scalar @$nombres > 2;
+    $str .= ' y ' if scalar @$nombres == 1;
+  }
   return $str;
 }
 
