@@ -1,6 +1,6 @@
 package Situacion;
 use Data::Dumper;
-use fields qw(_entorno _fecha _fecha_base _actores _log);
+use fields qw(_entorno _fecha _fecha_base _actores _log _descripcion);
 use Want;
 
 sub new {
