@@ -18,8 +18,9 @@ sub new {
   my $self = fields::new($class);
   $self->{_items} = [];
   foreach my $key (sort keys %$params) {
+    next if $key eq 'entorno';
     my $valor = $params->{$key};
-    $valor = Persona::Valor->new({key => $key, valor => $valor}) if not ref $valor;
+    $valor = Saga::despachar('Persona::Valor')->new({key => $key, valor => $valor}) if not ref $valor;
     push @{$self->{_items}}, $valor;
     $valor->persona($self);
   }

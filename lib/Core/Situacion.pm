@@ -1,7 +1,11 @@
 package Situacion;
 use Data::Dumper;
-use fields qw(_entorno _fecha _fecha_base _actores _log _descripcion);
+use fields qw(_entorno _fecha _fecha_base _actores _log _descripcion _relato);
 use Want;
+
+sub logger {
+  return Log::Log4perl->get_logger(__PACKAGE__);
+}
 
 sub new {
   my $class = shift;
@@ -13,6 +17,41 @@ sub new {
   }
   $self;
 }
+
+sub puede_random { 1 } 
+
+sub hacer {
+  my $self = shift;
+  $self->hacer_actores;
+  logger->info($self->key, '. Actores: ', join ', ', map {$_->nombre} @{$self->actores});
+  $self->_hacer(@_);
+  return $self;  
+}
+
+sub hacer_actores {
+  my $self = shift;
+  my $personas = shift;
+  my $actores = [];
+  $personas = [] if not defined $personas;
+  while(scalar @{$personas} < 2) {
+    my $params = {
+      package => 'Persona'
+    };
+    if($personas->[0]) {
+      $params->{nombre} = "!".$personas->[0]->nombre;
+    }
+    my $persona = $self->entorno->buscar_crear($params);
+    next if scalar grep {$_ eq $persona} @$personas;
+    push @$personas, $persona;
+  }
+  foreach my $persona (@$personas) {
+    push @$actores, Saga::despachar('Situacion::Actor')->new({
+      persona => $persona,
+    });
+  }
+  $self->actores($actores);
+}
+
 
 sub actores {
   my $self = shift;
@@ -56,6 +95,7 @@ sub log {
   my $message = shift;
   my $fecha = Saga::dt($self->fecha);
   my $fecha_str = $fecha->dmy . ' ' .$fecha->day_name . ' ' .$fecha->hms;
+  logger->trace($fecha_str .": ".$message) if defined $message;
   return push @{$self->{_log}}, $fecha_str .": ".$message if defined $message;
   return $self->{_log};
 }
@@ -63,10 +103,15 @@ sub log {
 sub describir {
   my $self = shift;
   my $str = '';
-  $str .= "###########################################################################\n";
-  $str .= $self->fecha_base."\n";
-  $str .= join("\n", @{$self->log});
+  $str .= $self->fecha_base." ".$self->key.". Actores: ".$self->nombres_actores."\n";
+  $str .= join '', @{$self->relato};
   return $str;
+}
+
+sub relato {
+  my $self = shift;
+  $self->{_relato} = [] if not defined $self->{_relato};
+  return $self->{_relato};
 }
 
 sub nombres_actores {

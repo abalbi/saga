@@ -1,5 +1,6 @@
-package Persona;
+package Libido::Persona;
 use strict;
+use base qw(Persona);
 use Data::Dumper;
 use DateTime::Format::Strptime;
 use Zodiac::Tiny qw(zodiac_of);
@@ -14,7 +15,7 @@ sub nacimiento {
 
 sub edad {
   my $self = shift;
-  return $Persona::Fabrica::ano_base - Saga::dt($self->nacimiento)->year;
+  return Saga::despachar('Entorno::Fabrica')->ano_base - Saga::dt($self->nacimiento)->year;
 }
 
 sub zodiaco {

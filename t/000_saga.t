@@ -32,6 +32,7 @@ describe "Saga" => sub {
     };
   };
   context "Saga::load" => sub {
+    return;
     context "CUANDO ejecuto el azar de Util con un numero" => sub {
       Saga::load('Libido');
       it "ENTONCES el hacer me debe devolver un numero mejor o igual al enviado" => sub {
@@ -39,7 +40,21 @@ describe "Saga" => sub {
       };
     };
   };
-
+  context "Saga::despachar" => sub {
+    context "CUANDO cuando ejecuto un despachar de la fabrica de entorno" => sub {
+      my $entorno_fabrica = Saga::despachar('Entorno::Fabrica');
+      it "ENTONCES debe devolver objetos de Core" => sub {
+        is $entorno_fabrica, 'Entorno::Fabrica';
+      };
+    };
+    context "CUANDO cuando ejecuto un despachar de la fabrica de entorno" => sub {
+      Saga::load('Libido');
+      my $entorno_fabrica = Saga::despachar('Entorno::Fabrica');
+      it "ENTONCES debe devolver objetos de Core" => sub {
+        is $entorno_fabrica, 'Libido::Entorno::Fabrica';
+      };
+    };
+  };
 };
 
 

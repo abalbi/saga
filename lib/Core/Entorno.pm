@@ -9,16 +9,6 @@ sub new {
   $self;
 }
 
-sub cantidad_personas {
-  my $self = shift;
-  return 5;
-}
-
-sub cantidad_situaciones {
-  my $self = shift;
-  return 15;
-}
-
 
 sub items {
   my $self = shift;
@@ -47,7 +37,7 @@ sub describir {
   foreach my $persona (@{$self->personas}) {
     $str .= $persona->describir."\n";
   }
-  foreach my $situacion (@{$self->situaciones}) {
+  foreach my $situacion (sort {$a->fecha cmp $b->fecha} @{$self->situaciones}) {
     $str .= $situacion->describir."\n";
   }
   return $str;
@@ -60,7 +50,7 @@ sub buscar_crear {
   if(scalar @$temp) {
     return Saga::azar($temp);
   } else {
-    my $persona = Persona::Fabrica->hacer($params);
+    my $persona = Saga::despachar('Persona::Fabrica')->hacer($params);
     push @{$self->items}, $persona;
     return $persona;
   }

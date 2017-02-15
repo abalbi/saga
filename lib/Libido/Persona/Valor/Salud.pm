@@ -1,4 +1,4 @@
-package Persona::Valor::Salud;
+package Libido::Persona::Valor::Salud;
 
 use base qw(Persona::Valor);
 use fields qw(_temperales);

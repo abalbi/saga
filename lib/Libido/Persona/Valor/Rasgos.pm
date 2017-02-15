@@ -1,4 +1,4 @@
-package Persona::Valor::Rasgos;
+package Libido::Persona::Valor::Rasgos;
 use Data::Dumper;
 use base qw(Persona::Valor);
 use fields qw();

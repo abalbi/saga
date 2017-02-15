@@ -1,4 +1,4 @@
-package Situacion::Pelea;
+package Libido::Situacion::Pelea;
 use strict;
 use Data::Dumper;
 use base qw(Situacion);
@@ -11,10 +11,13 @@ our $acentos = [qw(
 	invalidez			       nulidad_deportiva  tics_insoportables   torpeza
 )];
 
-sub hacer {
+sub key {'Situacion Pelea'};
+sub puede_random {0};
+
+
+sub _hacer {
   my $self = shift;
   my $personas = shift;
-  $self->hacer_actores;
   my $actores = [sort {$b->sentidos <=> $a->sentidos} @{$self->actores}];
   my $sigue = 'SI';
   my $duracion_total = 0;
@@ -48,9 +51,9 @@ sub hacer {
 #          $self->log($actor->nombre." ataca a ". $oponente->nombre . " y le causa $reporte->{dano} de daño. Salud ". $oponente->nombre.": ". $oponente->salud);
         }
         $sigue = 'NO' if $oponente->salud < 1;
-        $self->log(join(' - ', map {$_->nombre . ' => salud:' .("=" x $_->salud)} sort {$a->nombre cmp $b->nombre} @$actores)) if $reporte->{dano};
+      } else {
+        $actor->actua('SI');
       }
-      $actor->actua('SI');
   	}
   	$self->fecha(DateTime->from_epoch(epoch => $self->fecha->epoch + $duracion)->datetime);
   	$duracion_total += $duracion;
@@ -58,28 +61,5 @@ sub hacer {
   $self->log("La pelea entre " . $self->nombres_actores . " dura " . Saga::seg2codes($duracion_total));
 }
 
-sub hacer_actores {
-  my $self = shift;
-  my $personas = shift;
-  my $actores = [];
-  $personas = [] if not defined $personas;
-  while(scalar @{$personas} < 2) {
-    my $params = {
-      package => 'Persona'
-    };
-    if($personas->[0]) {
-      $params->{nombre} = "!".$personas->[0]->nombre;
-    }
-    my $persona = $self->entorno->buscar_crear($params);
-    next if scalar grep {$_ eq $persona} @$personas;
-    push @$personas, $persona;
-  }
-  foreach my $persona (@$personas) {
-    push @$actores, Situacion::Actor->new({
-      persona => $persona,
-    });
-  }
-  $self->actores($actores);
-}
 
 1;

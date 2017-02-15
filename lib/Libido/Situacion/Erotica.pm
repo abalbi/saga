@@ -1,7 +1,11 @@
-package Situacion::Erotica;
+package Libido::Situacion::Erotica;
 use strict;
 use Data::Dumper;
 use base qw(Situacion);
+
+sub key {'Situacion Erotica'}
+
+sub puede_random {0};
 
 our $calentando_motores = {
   BESOS_APASIONADOS   => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 10, 'bizarr[a|o]' => 6, 'depravad[a|o]' => 0,},
@@ -35,46 +39,19 @@ our $a_toda_maquina = {
   SEXO_ORAL => { 'romantic[a|o]' => 6, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 6,},
   POR_DETRAS => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 10,},
   CUBANA => { 'romantic[a|o]' => 0, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
-  69 => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
+  SESENTINUEVE => { 'romantic[a|o]' => 1, 'fogos[a|o]' => 10, 'bizarr[a|o]' => 10,  'depravad[a|o]' => 1,},
   EN_LA_CAMA => { 'romantic[a|o]' => 10,  'fogos[a|o]' => 6,'bizarr[a|o]' => 0, 'depravad[a|o]' => 1,},
 };
 
 
-sub hacer {
+sub _hacer {
   my $self = shift;
   my $personas = shift;
-  $self->hacer_actores($personas);
   $self->hacer_calentando_motores;
   $self->hacer_a_toda_maquina;
   $self->hacer_subidon_final;
   $self->hacer_petite_morte;
 }
-
-sub hacer_actores {
-  my $self = shift;
-  my $personas = shift;
-  my $actores = [];
-  while(scalar @{$personas} < 2) {
-    my $params = {
-      package => 'Persona'
-    };
-    if($personas->[0]) {
-      $params->{nombre} = "!".$personas->[0]->nombre;
-
-    }
-    my $persona = $self->entorno->buscar_crear($params);
-    next if scalar grep {$_ eq $persona} @$personas;
-    push @$personas, $persona;
-  }
-  foreach my $persona (@$personas) {
-    push @$actores, Situacion::Actor->new({
-      persona => $persona,
-      puntos_placer => 0,
-    });
-  }
-  $self->actores($actores);
-}
-
 
 sub hacer_petite_morte {
   my $self = shift;
@@ -92,10 +69,6 @@ sub hacer_petite_morte {
     $params->{key} = 'animo';
     $params->{fecha} = $self->fecha;
     $actor->persona->alterar($params);
-    $self->log(
-      $actor->nombre . " obtiene un $params->{alteracion} en obtiene un $params->{key} " .
-      "durante " . $params->{duracion} . " y queda en " . $actor->persona->animo($self->fecha) . " y animo temporal " . $actor->persona->animo->temporal($self->fecha)
-    );
   }   
 }
 
@@ -130,9 +103,7 @@ sub hacer_subidon_final {
       $mod = 35 if $nivel == 9;
     }
     $actor->puntos_placer($puntos_placer + $mod);
-    $self->log($actor->persona->nombre . " hace el subidon y pasa de $puntos_placer a ". $actor->puntos_placer);
   }
-
 }
 
 sub hacer_a_toda_maquina {
@@ -156,10 +127,6 @@ sub hacer_a_toda_maquina {
       $puntos = $posibles if $posibles <= 1;
       $actor2->puntos_placer($actor2->puntos_placer + $puntos);
     }
-    $self->log(
-      $actor->nombre . " propone " . $actor->a_toda_maquina .". ".
-      "Puntos de Placer - " . join(' ', map {$_->nombre . ": ". $_->puntos_placer} @{$actores})
-    );
     my $duracion = Saga::azar(20*60);
     $self->fecha(DateTime->from_epoch(epoch => $self->fecha->epoch + $duracion)->datetime);
   }
@@ -186,10 +153,6 @@ sub hacer_calentando_motores {
       $puntos = $posibles if $posibles <= 1;
       $actor2->puntos_placer($actor2->puntos_placer + $puntos);
     }
-    $self->log(
-      $actor->nombre . " propone " . $actor->calentando_motores .". ".
-      "Puntos de Placer - " . join(' ', map {$_->nombre . ": ". $_->puntos_placer} @{$actores})
-    );
     my $duracion = Saga::azar(20*60);
     $self->fecha(DateTime->from_epoch(epoch => $self->fecha->epoch + $duracion)->datetime);
   }

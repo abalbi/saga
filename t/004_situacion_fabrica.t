@@ -14,7 +14,7 @@ describe "Situacion::Fabrica" => sub {
     context "CUANDO ejecuto hacer" => sub {
       my $entorno = Entorno->new;
       my $fecha = DateTime->now;
-      my $situacion = Situacion::Fabrica->hacer($entorno, {fecha => $fecha->datetime});
+      my $situacion = Saga::despachar('Situacion::Fabrica')->hacer(entorno => $entorno, fecha => $fecha->datetime);
       it "ENTONCES debe devolverme una Situacion con los parametros definidos" => sub {
         isa_ok $situacion, 'Situacion';
       };
@@ -25,10 +25,10 @@ describe "Situacion::Fabrica" => sub {
       my $params = {};
       my $entorno = Entorno->new;
       my $fecha = DateTime->now;
-      my $situacion = Situacion::Fabrica->hacer($entorno, {fecha => $fecha->datetime});
+      my $situacion = Saga::despachar('Situacion::Fabrica')->hacer(entorno => $entorno, fecha => $fecha->datetime);
       my $personas = [
-        Persona::Fabrica->hacer,
-        Persona::Fabrica->hacer,
+        Saga::despachar('Persona::Fabrica')->hacer,
+        Saga::despachar('Persona::Fabrica')->hacer,
       ];
       my $actores = $situacion->hacer_actores($personas);
       it "ENTONCES debe devolverme una persona con los parametros definidos" => sub {
@@ -39,8 +39,8 @@ describe "Situacion::Fabrica" => sub {
       my $params = {};
       my $entorno = Entorno->new;
       my $fecha = DateTime->now;
-      my $situacion = Situacion::Fabrica->hacer($entorno, {fecha => $fecha->datetime});
-      my $personas = [Persona::Fabrica->hacer];
+      my $situacion = Saga::despachar('Situacion::Fabrica')->hacer(entorno => $entorno, fecha => $fecha->datetime);
+      my $personas = [Saga::despachar('Persona::Fabrica')->hacer];
       my $actores = $situacion->hacer_actores($personas);
       it "ENTONCES debe devolverme una persona con los parametros definidos" => sub {
         is scalar @{$actores}, 2;
@@ -52,7 +52,7 @@ describe "Situacion::Fabrica" => sub {
       my $params = {};
       my $entorno = Entorno->new;
       my $fecha = DateTime->now;
-      my $situacion = Situacion::Fabrica->hacer_situacion($entorno, $fecha);
+      my $situacion = Saga::despachar('Situacion::Fabrica')->hacer_situacion($entorno, $fecha, 'Libido::Situacion::Seduccion');
       it "ENTONCES debe devolver un situacion" => sub {
         is $situacion->fecha, $fecha->datetime;
         is $situacion->entorno, $entorno;

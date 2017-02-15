@@ -18,6 +18,11 @@ sub new {
   $self;
 }
 
+sub logger {
+  return Log::Log4perl->get_logger(__PACKAGE__);
+}
+
+
 our $AUTOLOAD;
 
 sub AUTOLOAD {
@@ -36,6 +41,7 @@ sub AUTOLOAD {
   }
   if(defined $valor) {
     $self->stash->{$propiedad} = $valor; 
+    logger->trace($self->nombre, ': ' ,$propiedad, ' => ', $valor);
   }
   return $self->stash->{$propiedad};
 }

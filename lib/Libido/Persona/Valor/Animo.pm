@@ -1,4 +1,4 @@
-package Persona::Valor::Animo;
+package Libido::Persona::Valor::Animo;
 
 use base qw(Persona::Valor);
 use fields qw(_temperales);

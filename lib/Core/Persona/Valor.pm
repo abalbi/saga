@@ -12,6 +12,11 @@ sub new {
   $self;
 }
 
+sub logger {
+  return Log::Log4perl->get_logger(__PACKAGE__);
+}
+
+
 sub key {
   my $self = shift;
   return $self->{_key};
@@ -90,8 +95,18 @@ sub persona {
 sub alterar {
   my $self = shift;
   my $params = shift;
-  my $alteracion = Alteracion->new($params);
+  my $alteracion = Saga::despachar('Alteracion')->new($params);
   push @{$self->alteraciones}, $alteracion;
+  my $persona_nombre = $self->{_persona}->nombre->valor if $self->{_persona};
+  logger->trace(
+    'Alteracion: ',
+    $persona_nombre?$persona_nombre:'undef',
+    '->',
+    $self->key?$self->key:'undef',':',
+    $alteracion->alteracion,
+    $alteracion->duracion?' duracion:'.$alteracion->duracion:'',
+    $alteracion->temporal?' temporal:'.$alteracion->temporal:'',
+  );
 }
 
 sub t {

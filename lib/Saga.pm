@@ -8,6 +8,7 @@ our $srand_asignado = 0;
 use Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(azar t);
+use Log::Log4perl;
 
 use Core::Alteracion;
 use Core::Entorno;
@@ -19,9 +20,55 @@ use Core::Situacion;
 use Core::Situacion::Actor;
 use Core::Situacion::Fabrica;
 
+our $modulo = undef;
+our $mapa = {};
+
+Log::Log4perl->init("log.conf");
+
+sub logger {
+  return Log::Log4perl->get_logger(__PACKAGE__);
+}
+
+sub despachar {
+  my $pkg = shift;
+  my $objeto;
+  my $clase;
+  return $mapa->{$pkg} if exists $mapa->{$pkg};
+  if(not defined $clase) {
+    if(defined $modulo) {
+      eval "use ".$modulo."::".$pkg.";" if not defined $clase && defined $modulo;
+      if(!$@) {
+        $clase = "$modulo::$pkg";
+      } else {
+        logger()->warn("No se encontro $modulo::$pkg")  
+      }
+    }
+    $clase = $pkg if not defined $clase;
+  }
+  $mapa->{$pkg} = $clase;
+  logger()->trace("Despachando... $clase");
+  return $clase;
+}
+
 sub load {
-  my $modulo = shift;
-  require $modulo . '/Loader.pm';
+  $modulo = shift;
+  $mapa = {};
+  my $dirname = "./lib/$modulo/Situacion";
+  logger()->info("Cargando modulo $modulo");
+  opendir ( DIR, $dirname ) || die "Error in opening dir $dirname\n";
+  while( (my $filename = readdir(DIR))){
+    next if $filename =~ /^\.+$/;
+    $filename =~ s/\.pm//;
+    despachar('Situacion::'.$filename);
+  }
+  closedir(DIR);
+}
+
+sub barra {
+  my $valor = shift;
+  return $valor if $valor !~ /^\d+$/;
+  my $tamano = shift;
+  return ('=' x $valor).(' ' x ($tamano - $valor));
 }
 
 sub fecha_base {
@@ -29,8 +76,13 @@ sub fecha_base {
 }
 
 sub params {
-  my $params = {@_} if scalar @_ > 1;
-  $params = shift if scalar @_ == 1;
+  my (@params) = @_; 
+  my $params;
+  if(scalar @params == 1 && ref $params[0] eq 'HASH') {
+    $params = $params[0];
+  } elsif (scalar @params > 1 && !ref $params[0]) {
+    $params = {@params};
+  }
   return $params;
 }
 
@@ -93,10 +145,12 @@ sub dt {
 }
 
 sub codes2seg {
-  my $tiempo = shift;
-  $tiempo =~ s/d/ * 24 * 60 * 60/g;
-  $tiempo =~ s/y/ * 365 * 24 * 60 * 60/g;
-  return eval $tiempo;
+  my $codes = shift;
+  my $seg = $codes;
+  $seg =~ s/d/ * 24 * 60 * 60/g;
+  $seg =~ s/y/ * 365 * 24 * 60 * 60/g;
+  $seg = eval $seg;
+  return $seg;
 }
 
 sub seg2codes {
